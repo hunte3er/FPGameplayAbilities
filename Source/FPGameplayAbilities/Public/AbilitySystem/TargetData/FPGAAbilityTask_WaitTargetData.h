@@ -42,10 +42,10 @@ public:
 	void OnTargetDataReplicatedCancelledCallback();
 
 	UFUNCTION()
-	void OnTargetDataReadyCallback(const FGameplayAbilityTargetDataHandle& Data);
+	void OnTargetDataReadyCallback(const FGameplayAbilityTargetDataHandle& Data) const;
 
 	UFUNCTION()
-	void OnTargetDataCancelledCallback(const FGameplayAbilityTargetDataHandle& Data);
+	void OnTargetDataCancelledCallback(const FGameplayAbilityTargetDataHandle& Data) const ;
 
 	/** Spawns target actor and waits for it to return valid data or to be canceled. */
 	UFUNCTION(BlueprintCallable, meta=(HidePin = "OwningAbility", DefaultToSelf = "OwningAbility", BlueprintInternalUseOnly = "true", HideSpawnParms="Instigator"), Category="Ability|Tasks")

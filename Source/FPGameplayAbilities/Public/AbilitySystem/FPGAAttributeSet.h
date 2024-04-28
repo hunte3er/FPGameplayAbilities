@@ -46,9 +46,9 @@ public:
 	ATTRIBUTE_ACCESSORS(UFPGAAttributeSet, Damage)
 
 	UFUNCTION()
-	void OnRep_Damage()
+	void OnRep_Damage(const FGameplayAttributeData& OldValue)
 	{
-		GAMEPLAYATTRIBUTE_REPNOTIFY(UFPGAAttributeSet, Damage);
+		GAMEPLAYATTRIBUTE_REPNOTIFY(UFPGAAttributeSet, Damage, OldValue);
 	}
 
 	/** Health Attribute */
@@ -57,9 +57,9 @@ public:
 	ATTRIBUTE_ACCESSORS(UFPGAAttributeSet, Health)
 
 	UFUNCTION()
-	void OnRep_Health()
+	void OnRep_Health(const FGameplayAttributeData& OldValue)
 	{
-		GAMEPLAYATTRIBUTE_REPNOTIFY(UFPGAAttributeSet, Health);
+		GAMEPLAYATTRIBUTE_REPNOTIFY(UFPGAAttributeSet, Health, OldValue);
 	}
 
 	/** MaxHealth Attribute */
@@ -68,9 +68,9 @@ public:
 	ATTRIBUTE_ACCESSORS(UFPGAAttributeSet, MaxHealth)
 
 	UFUNCTION()
-	void OnRep_MaxHealth()
+	void OnRep_MaxHealth(const FGameplayAttributeData& OldValue)
 	{
-		GAMEPLAYATTRIBUTE_REPNOTIFY(UFPGAAttributeSet, MaxHealth);
+		GAMEPLAYATTRIBUTE_REPNOTIFY(UFPGAAttributeSet, MaxHealth, OldValue);
 	}
 
 	/** MovementSpeed Attribute */
@@ -79,8 +79,8 @@ public:
 	ATTRIBUTE_ACCESSORS(UFPGAAttributeSet, MovementSpeed)
 
 	UFUNCTION()
-	void OnRep_MovementSpeed()
+	void OnRep_MovementSpeed(const FGameplayAttributeData& OldValue)
 	{
-		GAMEPLAYATTRIBUTE_REPNOTIFY(UFPGAAttributeSet, MovementSpeed);
+		GAMEPLAYATTRIBUTE_REPNOTIFY(UFPGAAttributeSet, MovementSpeed, OldValue);
 	}
 };

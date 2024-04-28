@@ -4,6 +4,7 @@
 #include "GameFramework/Character.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemGlobals.h"
+#include "AbilitySystemLog.h"
 
 UFPGAAbilityTask_PlayMontageNotify::UFPGAAbilityTask_PlayMontageNotify(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -106,13 +107,13 @@ void UFPGAAbilityTask_PlayMontageNotify::Activate()
 
 	bool bPlayedMontage = false;
 
-	if (AbilitySystemComponent && MontageToPlay)
+	if (AbilitySystemComponent.Get() && MontageToPlay)
 	{
 		const FGameplayAbilityActorInfo* ActorInfo = Ability->GetCurrentActorInfo();
 		UAnimInstance* AnimInstance = ActorInfo->GetAnimInstance();
 		if (AnimInstance != nullptr)
 		{
-			const float NewSequenceTime = MontageToPlay->SequenceLength / Rate;
+			const float NewSequenceTime = MontageToPlay->GetPlayLength() / Rate;
 
 			if (AbilitySystemComponent->PlayMontage(Ability, Ability->GetCurrentActivationInfo(), MontageToPlay, NewSequenceTime, StartSection) > 0.f)
 			{
@@ -180,7 +181,7 @@ void UFPGAAbilityTask_PlayMontageNotify::OnNotifyEndReceived(FName NotifyName, c
 
 void UFPGAAbilityTask_PlayMontageNotify::ExternalCancel()
 {
-	check(AbilitySystemComponent);
+	check(AbilitySystemComponent.Get());
 
 	if (ShouldBroadcastAbilityTaskDelegates())
 	{
@@ -224,7 +225,7 @@ bool UFPGAAbilityTask_PlayMontageNotify::StopPlayingMontage()
 
 	// Check if the montage is still playing
 	// The ability would have been interrupted, in which case we should automatically stop the montage
-	if (AbilitySystemComponent && Ability)
+	if (AbilitySystemComponent.Get() && Ability)
 	{
 		if (AbilitySystemComponent->GetAnimatingAbility() == Ability
 			&& AbilitySystemComponent->GetCurrentMontage() == MontageToPlay)

@@ -91,7 +91,7 @@ void AFPGATargetActor_Cursor::Tick(float DeltaSeconds)
 	if (bDebug)
 		DrawDebugFromHit(Hit);
 
-	ACharacter* HoveredCharacter = Cast<ACharacter>(Hit.Actor);
+	ACharacter* HoveredCharacter = Cast<ACharacter>(Hit.GetActor());
 
 	// Disable outline on currently hovered
 	if (CurrentlyHovered != nullptr)
@@ -199,7 +199,7 @@ void AFPGATargetActor_Cursor::DrawDebugFromHit(FHitResult& Hit)
 {
 	if (TargetType == FPGA_Target_Actor)
 	{
-		if (Hit.Actor != nullptr)
+		if (Hit.GetActor() != nullptr)
 		{
 			DrawDebugSphere(GetWorld(), Hit.GetActor()->GetActorLocation(), 32, 32, FColor(255, 0, 0));
 		}

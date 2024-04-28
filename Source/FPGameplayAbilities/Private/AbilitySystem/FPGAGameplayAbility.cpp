@@ -124,7 +124,7 @@ void UFPGAGameplayAbility::CommitExecute(const FGameplayAbilitySpecHandle Handle
 	ApplyCost(Handle, ActorInfo, ActivationInfo);
 }
 
-bool UFPGAGameplayAbility::CommitAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo)
+bool UFPGAGameplayAbility::CommitAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, FGameplayTagContainer* OptionalRelevantTags)
 {
 	UGameplayEffect* Effect = GetCooldownGameplayEffect();
 	if (Effect != nullptr)

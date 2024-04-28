@@ -14,6 +14,7 @@
 #include "GameplayTagContainer.h"
 #include "GameplayEffectTypes.h"
 #include "Engine/Engine.h"
+#include "UObject/UnrealTypePrivate.h"
 
 void UFPGAGameplayAbilitiesLibrary::InitGlobalData()
 {
@@ -30,7 +31,7 @@ void UFPGAGameplayAbilitiesLibrary::AddAttributeSet(UAbilitySystemComponent* Abi
 
 	// Get your attribute set
 	UAttributeSet* AttributeSet = nullptr;
-	for (UAttributeSet* Att : AbilitySystem->SpawnedAttributes)
+	for (UAttributeSet* Att : AbilitySystem->GetSpawnedAttributes())
 	{
 		if (Att->GetClass() == Attributes)
 		{
@@ -49,13 +50,13 @@ void UFPGAGameplayAbilitiesLibrary::AddAttributeSet(UAbilitySystemComponent* Abi
 	// Load data table
 	static const FString Context = FString(TEXT("AddAttributeSet"));
 
-	for (TFieldIterator<UProperty> It(AttributeSet->GetClass(), EFieldIteratorFlags::IncludeSuper); It; ++It)
+	for (TFieldIterator<FProperty> It(AttributeSet->GetClass(), EFieldIteratorFlags::IncludeSuper); It; ++It)
 	{
-		UProperty* Property = *It;
-		UNumericProperty* NumericProperty = Cast<UNumericProperty>(Property);
+		FProperty* Property = *It;
+		FNumericProperty* NumericProperty = Cast<FNumericProperty>(Property);
 		if (NumericProperty)
 		{
-			FString RowNameStr = FString::Printf(TEXT("%s.%s.%s"), *GroupName.ToString(), *Property->GetOuter()->GetName(), *Property->GetName());
+			FString RowNameStr = FString::Printf(TEXT("%s.%s.%s"), *GroupName.ToString(), *Property->GetUPropertyWrapper()->GetOuter()->GetName(), *Property->GetName());
 
 			FAttributeMetaData* MetaData = DataTable->FindRow<FAttributeMetaData>(FName(*RowNameStr), Context, true);
 			if (MetaData)
@@ -254,7 +255,7 @@ void UFPGAGameplayAbilitiesLibrary::CancelAbilitiesWithTags(UAbilitySystemCompon
 
 UAttributeSet* UFPGAGameplayAbilitiesLibrary::FindAttributeSetOfClass(UAbilitySystemComponent* AbilitySystem, const TSubclassOf<UAttributeSet> AttributeClass)
 {
-	for (UAttributeSet* Set : AbilitySystem->SpawnedAttributes)
+	for (UAttributeSet* Set : AbilitySystem->GetSpawnedAttributes())
 	{
 		if (Set && Set->IsA(AttributeClass))
 		{
